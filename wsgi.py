@@ -29,8 +29,9 @@ def def_product(id):
     other_product = PRODUCTS.get(id)
     if other_product is None:
         return abort(404)
-    #else:
-        #return del PRODUCTS[id]
+    else:
+        del PRODUCTS[id]
+        return '', 201
 
 @app.route('/api/v1/products/', methods=['POST'])
 def def_product_add():
