@@ -1,5 +1,5 @@
 # wsgi.py
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort, request
 app = Flask(__name__)
 
 @app.route('/')
@@ -16,3 +16,24 @@ PRODUCTS = {
 def products():
     return jsonify(PRODUCTS)
 
+@app.route('/api/v1/products/<int:id>', methods=['GET'])
+def one_product(id):
+    other_product = PRODUCTS.get(id)
+    if other_product is None:
+        return abort(404)
+    else:
+        return PRODUCTS.get(id)
+
+@app.route('/api/v1/products/<int:id>', methods=['DELETE'])
+def def_product(id):
+    other_product = PRODUCTS.get(id)
+    if other_product is None:
+        return abort(404)
+    #else:
+        #return del PRODUCTS[id]
+
+@app.route('/api/v1/products/', methods=['POST'])
+def def_product_add():
+    produit = request.get_json()
+    PRODUCTS[produit['id']] = produit
+    return '', 201
